@@ -2,12 +2,20 @@
 
 _tag_ to format SQL \`template literals\`.
 
-Transforms a template literal in an object that can be read by postgres, mysql, ...
+Transforms a template literal in an object that can be read by [node-postgres](https://github.com/brianc/node-postgres), mysql, ...
+
+### Installation
+
+```
+npm install @sequencework/sql --save
+```
+
+(or with **yarn**, `yarn add @sequencework/sql`)
 
 ### Usage
 
 ```js
-const sql = require('@sequence/sql')
+const sql = require('@sequencework/sql')
 
 const yearRange = [1983, 1992]
 
@@ -28,7 +36,7 @@ const query = sql`
 You can also use conditions :
 
 ```js
-const sql = require('@sequence/sql')
+const sql = require('@sequencework/sql')
 
 const listMoviesSQL = author => sql`
   select * from books
@@ -67,13 +75,13 @@ sql`
 `
 ```
 
-### Example with pg
+### Example with [node-postgres](https://github.com/brianc/node-postgres)
 
 We start by creating a function :
 
 ```js
 // movies.js
-const sql = require('@sequence/sql')
+const sql = require('@sequencework/sql')
 
 const listMoviesByYear = async (db, yearRange) => {
   const { rows } = db.query(sql`
@@ -89,7 +97,7 @@ const listMoviesByYear = async (db, yearRange) => {
 module.exports = { listMoviesByYear }
 ```
 
-Then, we create a singleton for the connection pool, like [recommended by brianc](https://node-postgres.com/guides/project-structure), pg's dad.
+Then, we create a singleton for the connection pool, like [recommended by brianc](https://node-postgres.com/guides/project-structure), node-postgres's creator.
 
 ```js
 // db.js
@@ -105,7 +113,6 @@ Finally, we connect everything :
 ```js
 // main.js
 const db = require('./db')
-
 const { listMoviesByYear } = require('./movies')
 
 const main = async () => {
@@ -117,13 +124,11 @@ const main = async () => {
 main()
 ```
 
-We can even create a transaction :
+We can even create a **transaction** (useless in this example, but it's just to show that our previous function is reusable) :
 
 ```js
-// main.js
-const db = require('./db')
-const { listMoviesByYear } = require('./movies')
-;(async () => {
+const main = async () => {
+  // we get a client
   const client = await db.connect()
 
   try {
@@ -139,10 +144,10 @@ const { listMoviesByYear } = require('./movies')
   }
 
   console.log(movies)
-})()
+}
 ```
 
-Since we ❤️ pg so much, we created a shorthand for it :
+Since we ❤️ [node-postgres](https://github.com/brianc/node-postgres) so much, we created a shorthand for it :
 
 ```js
 // long-version
@@ -153,7 +158,7 @@ const movies = sql(db)`select * from movies`
 // sql(db) just calls db.query so db can be a client or a pool :)
 ```
 
-You can then rewrite the previous `listMoviesByYear` function in a much more concise way :
+You can then rewrite the previous `listMoviesByYear` function in a much more concise way 😎
 
 ```js
 const listMoviesByYear = async (db, yearRange) => sql(db)`
