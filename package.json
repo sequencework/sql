@@ -1,0 +1,15 @@
+{
+  "name": "@sequencework/sql",
+  "version": "1.0.0",
+  "main": "sql.js",
+  "license": "MIT",
+  "files": [
+    "sql.js"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^23.5.0"
+  }
+}

@@ -1,0 +1,165 @@
+### `sql`
+
+_tag_ to format SQL \`template literals\`.
+
+Transforms a template literal in an object that can be read by postgres, mysql, ...
+
+### Usage
+
+```js
+const sql = require('@sequence/sql')
+
+const yearRange = [1983, 1992]
+
+const query = sql`
+  select * from movies
+  where 
+    year >= ${yearRange[0]} 
+    and year <= ${yearRange[1]}
+`
+
+// query looks like this :
+// {
+//  text: 'select * from books where author = $1 and year = $2',
+//  values: [1983, 1992]
+// }
+```
+
+You can also use conditions :
+
+```js
+const sql = require('@sequence/sql')
+
+const listMoviesSQL = author => sql`
+  select * from books
+  ${
+    // if author is undefined, ignore it in the query
+    author && sql`where author = ${author}`
+  }
+`
+
+// listMoviesSQL() looks like this :
+// {
+//  text: 'select * from books',
+//  values: []
+// }
+
+// listMoviesSQL('steinbeck') looks like this :
+// {
+//  text: 'select * from books where author = $1',
+//  values: ['steinbeck']
+// }
+```
+
+⚠️ The expression will only be ignored if it returns `undefined`. If it is `false`, it will be added as a value.
+
+```js
+// does not work as expected
+sql`
+  select * from books 
+  ${filterThisYear && 'where year = 2018'}
+`
+
+// instead you should do
+sql`
+  select * from books
+  ${filterThisYear ? 'where year = 2018' : undefined}
+`
+```
+
+### Example with pg
+
+We start by creating a function :
+
+```js
+// movies.js
+const sql = require('@sequence/sql')
+
+const listMoviesByYear = async (db, yearRange) => {
+  const { rows } = db.query(sql`
+    select * from movies
+    where 
+      year >= ${yearRange[0]} 
+      and year <= ${yearRange[1]}
+  `)
+
+  return rows
+}
+
+module.exports = { listMoviesByYear }
+```
+
+Then, we create a singleton for the connection pool, like [recommended by brianc](https://node-postgres.com/guides/project-structure), pg's dad.
+
+```js
+// db.js
+const { Pool } = require('pg')
+// we create a singleton here for the connection pool
+const db = new Pool()
+
+module.exports = db
+```
+
+Finally, we connect everything :
+
+```js
+// main.js
+const db = require('./db')
+
+const { listMoviesByYear } = require('./movies')
+
+const main = async () => {
+  const movies = listMoviesByYear(db, [1983, 1992])
+
+  console.log(movies)
+}
+
+main()
+```
+
+We can even create a transaction :
+
+```js
+// main.js
+const db = require('./db')
+const { listMoviesByYear } = require('./movies')
+;(async () => {
+  const client = await db.connect()
+
+  try {
+    await client.query('BEGIN')
+
+    const movies = listMoviesByYear(client, [1983, 1992])
+
+    await client.query('COMMIT')
+  } catch (e) {
+    await client.query('ROLLBACK')
+  } finally {
+    client.release()
+  }
+
+  console.log(movies)
+})()
+```
+
+Since we ❤️ pg so much, we created a shorthand for it :
+
+```js
+// long-version
+const { rows: movies } = db.query(sql`select * from movies`)
+
+// equivalent, short-version
+const movies = sql(db)`select * from movies`
+// sql(db) just calls db.query so db can be a client or a pool :)
+```
+
+You can then rewrite the previous `listMoviesByYear` function in a much more concise way :
+
+```js
+const listMoviesByYear = async (db, yearRange) => sql(db)`
+  select * from movies
+  where 
+    year >= ${yearRange[0]} 
+    and year <= ${yearRange[1]}
+`
+```
