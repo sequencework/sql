@@ -2,7 +2,7 @@
 
 _tag_ to format SQL \`template literals\`.
 
-Transforms a template literal in an object that can be read by [node-postgres](https://github.com/brianc/node-postgres), mysql, ...
+Transforms a template literal in an object that can be read by [node-postgres](https://github.com/brianc/node-postgres).
 
 ### Installation
 
@@ -41,7 +41,7 @@ const sql = require('@sequencework/sql')
 const listMoviesSQL = author => sql`
   select * from books
   ${
-    // if author is undefined, ignore it in the query
+    // if author is undefined, it is ignored in the query
     author && sql`where author = ${author}`
   }
 `
@@ -168,3 +168,12 @@ const listMoviesByYear = async (db, yearRange) => sql(db)`
     and year <= ${yearRange[1]}
 `
 ```
+
+### More
+
+This package is inspired by the great [sql-template-strings](https://github.com/felixfbecker/node-sql-template-strings). Some interesting features that we were missing :
+
+- nested `sql` tags
+- ignore `undefined` expressions in `sql`
+
+So we made this 🙂
