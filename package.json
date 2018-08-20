@@ -3,6 +3,13 @@
   "version": "0.0.1",
   "main": "sql.js",
   "license": "MIT",
+  "description": "Javascript tag to format SQL template literals",
+  "keywords": [
+    "sql",
+    "template-literals",
+    "node-postgres",
+    "pg"
+  ],
   "files": [
     "sql.js"
   ],
