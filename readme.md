@@ -38,7 +38,7 @@ You can also use conditions :
 ```js
 const sql = require('@sequencework/sql')
 
-const listMoviesSQL = author => sql`
+const findBookByAuthor = author => sql`
   select * from books
   ${
     // if author is undefined, it is ignored in the query
@@ -46,13 +46,13 @@ const listMoviesSQL = author => sql`
   }
 `
 
-// listMoviesSQL() looks like this :
+// findBookByAuthor() looks like this :
 // {
 //  text: 'select * from books',
 //  values: []
 // }
 
-// listMoviesSQL('steinbeck') looks like this :
+// findBookByAuthor('steinbeck') looks like this :
 // {
 //  text: 'select * from books where author = $1',
 //  values: ['steinbeck']

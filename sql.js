@@ -8,9 +8,13 @@ const sqlText = (count, chains, expressions) => {
     if (expression === undefined) {
       // if expression is undefined, just skip it
       text += chains[i + 1]
-    } else if (expression._sql) {
+    } else if (expression && expression._sql) {
       // if expression is a sub `sql` template literal
-      const { text: _text, values: _values } = expression._sql(count)
+      const { text: _text, values: _values } = sqlText(
+        count,
+        expression._sql.chains,
+        expression._sql.expressions
+      )
       text += _text + chains[i + 1]
       values.push(..._values)
     } else {
@@ -22,7 +26,7 @@ const sqlText = (count, chains, expressions) => {
   }
 
   return {
-    _sql: count => sqlText(count, chains, values),
+    _sql: { chains, expressions },
     text,
     values
   }
