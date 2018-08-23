@@ -4,6 +4,12 @@ _tag_ to format SQL \`template literals\`.
 
 Transforms a template literal in an object that can be read by [node-postgres](https://github.com/brianc/node-postgres).
 
+### Features
+
+- Nested sql tags
+- `undefined` expressions are ignored
+- Useful [shorthand for node-postgres](#shorthand-fo-postgres) : sql(db)\`...\`
+
 ### Installation
 
 ```
@@ -146,6 +152,8 @@ const main = async () => {
   console.log(movies)
 }
 ```
+
+#### Shorthand for postgres
 
 Since we ❤️ [node-postgres](https://github.com/brianc/node-postgres) so much, we created a shorthand for it :
 
