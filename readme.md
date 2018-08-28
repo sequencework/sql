@@ -68,6 +68,8 @@ const findBookByAuthor = author => sql`
 ⚠️ The expression will only be ignored if it returns `undefined`. If it is `false`, it will be added as a value.
 
 ```js
+const filterThisYear = false
+
 // does not work as expected
 sql`
   select * from books 
