@@ -92,7 +92,7 @@ We start by creating a function :
 const sql = require('@sequencework/sql')
 
 const listMoviesByYear = async (db, yearRange) => {
-  const { rows } = db.query(sql`
+  const { rows } = await db.query(sql`
     select * from movies
     where 
       year >= ${yearRange[0]} 
@@ -124,7 +124,7 @@ const db = require('./db')
 const { listMoviesByYear } = require('./movies')
 
 const main = async () => {
-  const movies = listMoviesByYear(db, [1983, 1992])
+  const movies = await listMoviesByYear(db, [1983, 1992])
 
   console.log(movies)
 }
@@ -142,7 +142,7 @@ const main = async () => {
   try {
     await client.query('BEGIN')
 
-    const movies = listMoviesByYear(client, [1983, 1992])
+    const movies = await listMoviesByYear(client, [1983, 1992])
 
     await client.query('COMMIT')
   } catch (e) {
@@ -161,10 +161,10 @@ Since we ❤️ [node-postgres](https://github.com/brianc/node-postgres) so much
 
 ```js
 // long-version
-const { rows: movies } = db.query(sql`select * from movies`)
+const { rows: movies } = await db.query(sql`select * from movies`)
 
 // equivalent, short-version
-const movies = sql(db)`select * from movies`
+const movies = await sql(db)`select * from movies`
 // sql(db) just calls db.query so db can be a client or a pool :)
 ```
 
