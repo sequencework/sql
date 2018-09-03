@@ -73,13 +73,13 @@ const filterThisYear = false
 // does not work as expected
 sql`
   select * from books
-  ${filterThisYear && sql'where year = 2018'}
+  ${filterThisYear && sql`where year = 2018`}
 `
 
 // instead you should do
 sql`
   select * from books
-  ${filterThisYear ? sql'where year = 2018' : undefined}
+  ${filterThisYear ? sql`where year = 2018` : undefined}
 `
 ```
 
