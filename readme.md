@@ -9,6 +9,7 @@ Transforms a template literal in an object that can be read by [node-postgres](h
 - Nested sql tags
 - `undefined` expressions are ignored
 - Useful [shorthand for node-postgres](#shorthand-fo-postgres) : sql(db)\`...\`
+- [TypeScript-friendly](#usage-with-typescript)
 
 ### Installation
 
@@ -175,6 +176,23 @@ const listMoviesByYear = async (db, yearRange) => sql(db)`
   select * from movies
   where 
     year >= ${yearRange[0]} 
+    and year <= ${yearRange[1]}
+`
+```
+
+### Usage with TypeScript
+
+`sql` comes with its TypeScript declaration file. You can directly use it within your TypeScript projects:
+
+```ts
+import sql = require('@sequencework/sql')
+
+const yearRange: ReadonlyArray<number> = [1983, 1992]
+
+const query = sql`
+  select * from movies
+  where
+    year >= ${yearRange[0]}
     and year <= ${yearRange[1]}
 `
 ```
