@@ -11,18 +11,22 @@
     "pg"
   ],
   "files": [
-    "sql.js"
+    "sql.js",
+    "types/index.d.ts"
   ],
+  "types": "types",
   "scripts": {
     "test": "jest",
     "prettier": "prettier --write '**/*.{js,json,css,md}' --ignore-path .gitignore",
-    "lint": "eslint '**/*.js' --ignore-path .gitignore"
+    "lint": "eslint '**/*.js' --ignore-path .gitignore",
+    "dtslint": "dtslint types"
   },
   "devDependencies": {
     "@sequencework/eslint-config": "^0.0.7",
-    "jest": "^23.5.0",
+    "dtslint": "^0.3.0",
     "eslint": "5.4.0",
     "husky": "1.0.0-rc.13",
+    "jest": "^23.5.0",
     "lint-staged": "7.2.2",
     "prettier": "1.14.2"
   },
@@ -48,6 +52,10 @@
       "git add"
     ],
     "*.{json,css,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts": [
       "prettier --write",
       "git add"
     ]

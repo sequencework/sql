@@ -84,7 +84,7 @@ test('shorthand for node-postgres', async () => {
       if (text === 'select * from books') {
         return { rows: sampleBooks }
       }
-      return { rows: false }
+      return { rows: [] }
     }
   }
 
