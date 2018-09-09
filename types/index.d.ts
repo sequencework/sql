@@ -17,8 +17,14 @@ declare function sql(
 
 declare namespace sql {
   interface QueryConfig {
-    _sql?: { chains: ReadonlyArray<string>; expressions: any[] }
+    _sql?: SqlContainer
     text: string
     values: any[]
   }
+}
+
+declare class SqlContainer {
+  constructor(chains: ReadonlyArray<string>, expressions: any[])
+  readonly chains: ReadonlyArray<string>
+  readonly expressions: any[]
 }
