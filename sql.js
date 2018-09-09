@@ -8,7 +8,7 @@ const sqlText = (count, chains, expressions) => {
     if (expression === undefined) {
       // if expression is undefined, just skip it
       text += chains[i + 1]
-    } else if (expression && expression._sql) {
+    } else if (expression && expression._sql instanceof SqlContainer) {
       // if expression is a sub `sql` template literal
       const { text: _text, values: _values } = sqlText(
         count,
@@ -26,7 +26,7 @@ const sqlText = (count, chains, expressions) => {
   }
 
   return {
-    _sql: { chains, expressions },
+    _sql: new SqlContainer(chains, expressions),
     text,
     values
   }
@@ -46,6 +46,13 @@ const sql = (chains, ...expressions) => {
   // basic usage
   // sql`...`
   return sqlText(1, chains, expressions)
+}
+
+class SqlContainer {
+  constructor(chains, expressions) {
+    this.chains = chains
+    this.expressions = expressions
+  }
 }
 
 module.exports = sql

@@ -91,3 +91,12 @@ test('shorthand for node-postgres', async () => {
   const books = await sql(db)`select * from books`
   expect(books).toBe(sampleBooks)
 })
+
+test('json as query parameter', () => {
+  const jsonValue = { _sql: { some: 'data' }, item: 'value' }
+  const query = sql`select obj from movies where obj = ${jsonValue}`
+
+  expect(trimSpaces(query.text)).toBe('select obj from movies where obj = $1')
+  expect(query.values).toHaveLength(1)
+  expect(query.values[0]).toBe(jsonValue)
+})
