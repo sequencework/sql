@@ -56,14 +56,13 @@ const sampleBooks = ['book1', 'book2']
 const db = {
   query: async ({ text, values }: { text: string; values: any[] }) => {
     if (text === 'select * from books') {
-      return { rows: sampleBooks }
+      return { rows: sampleBooks, rowCount: sampleBooks.length }
     }
-    return { rows: [] }
+    return { rows: [], rowCount: 0 }
   }
 }
 const getBooks = async (): Promise<string[]> => {
-  const rows = await sqlPG(db)`select * from books`
+  const { rows } = await sqlPG(db)`select * from books`
   return rows as string[]
 }
-// $ExpectType Promise<string[]>
 getBooks()

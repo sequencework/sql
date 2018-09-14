@@ -24,13 +24,50 @@ declare module '@sequencework/sql' {
 }
 
 declare module '@sequencework/sql/pg' {
-  function sqlPG(chains: {
+  type PGResultPromise = Promise<{
+    rows: any[]
+  }>
+
+  interface PGQueryResult {
+    rowCount: number
+    rows: any[]
+  }
+
+  function sql(db: {
     readonly query: (
       queryExpression: sqlElements.QueryConfig
-    ) => Promise<{
-      rows: any[]
-    }>
-  }): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<any[]>
+    ) => Promise<PGQueryResult>
+  }): (
+    chains: ReadonlyArray<string>,
+    ...expressions: any[]
+  ) => Promise<PGQueryResult>
 
-  export = sqlPG
+  function one(chains: {
+    readonly query: (
+      queryExpression: sqlElements.QueryConfig
+    ) => Promise<PGQueryResult>
+  }): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<any>
+  namespace one {
+
+  }
+
+  function many(chains: {
+    readonly query: (
+      queryExpression: sqlElements.QueryConfig
+    ) => Promise<PGQueryResult>
+  }): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<any[]>
+  namespace many {
+
+  }
+
+  function count(chains: {
+    readonly query: (
+      queryExpression: sqlElements.QueryConfig
+    ) => Promise<PGQueryResult>
+  }): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<number>
+  namespace count {
+
+  }
+
+  export = sql
 }
