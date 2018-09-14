@@ -1,4 +1,4 @@
-const sqlPG = require('../pg')
+const sql = require('../pg')
 
 test('shorthand for node-postgres', async () => {
   const sampleBooks = ['book1', 'book2']
@@ -11,6 +11,51 @@ test('shorthand for node-postgres', async () => {
     }
   }
 
-  const books = await sqlPG(db)`select * from books`
+  const { rows: books } = await sql(db)`select * from books`
   expect(books).toBe(sampleBooks)
+})
+
+test('sql(db).one should return the first row', async () => {
+  const sampleBooks = ['book1', 'book2']
+  const db = {
+    query: async ({ text, values }) => {
+      if (text === 'select * from books') {
+        return { rows: sampleBooks }
+      }
+      return { rows: [] }
+    }
+  }
+
+  const book = await sql.one(db)`select * from books`
+  expect(book).toBe(sampleBooks[0])
+})
+
+test('sql(db).many should return rows', async () => {
+  const sampleBooks = ['book1', 'book2']
+  const db = {
+    query: async ({ text, values }) => {
+      if (text === 'select * from books') {
+        return { rows: sampleBooks }
+      }
+      return { rows: [] }
+    }
+  }
+
+  const books = await sql.many(db)`select * from books`
+  expect(books).toBe(sampleBooks)
+})
+
+test('sql(db).count should return rowCount', async () => {
+  const sampleBooks = ['book1', 'book2']
+  const db = {
+    query: async ({ text, values }) => {
+      if (text === 'select * from books') {
+        return { rows: sampleBooks, rowCount: sampleBooks.length }
+      }
+      return { rows: [] }
+    }
+  }
+
+  const nbBooks = await sql.count(db)`select * from books`
+  expect(nbBooks).toBe(sampleBooks.length)
 })
