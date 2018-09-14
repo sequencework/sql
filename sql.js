@@ -32,21 +32,7 @@ const sqlText = (count, chains, expressions) => {
   }
 }
 
-const sql = (chains, ...expressions) => {
-  // if first argument is a db, then the tag is used like this :
-  // sql(db)`...`
-  if (chains.query) {
-    const db = chains
-    return async (chains, ...expressions) => {
-      const { rows } = await db.query(sqlText(1, chains, expressions))
-      return rows
-    }
-  }
-
-  // basic usage
-  // sql`...`
-  return sqlText(1, chains, expressions)
-}
+const sql = (chains, ...expressions) => sqlText(1, chains, expressions)
 
 class SqlContainer {
   constructor(chains, expressions) {

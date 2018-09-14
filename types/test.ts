@@ -2,6 +2,7 @@
 // See https://github.com/DefinitelyTyped/DefinitelyTyped
 
 import sql = require('@sequencework/sql')
+import sqlPG = require('@sequencework/sql/pg')
 
 const yearRange = [1983, 1992]
 
@@ -61,7 +62,7 @@ const db = {
   }
 }
 const getBooks = async (): Promise<string[]> => {
-  const rows = await sql(db)`select * from books`
+  const rows = await sqlPG(db)`select * from books`
   return rows as string[]
 }
 // $ExpectType Promise<string[]>
