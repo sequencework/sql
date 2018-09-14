@@ -162,9 +162,11 @@ Since we ❤️ [node-postgres](https://github.com/brianc/node-postgres) so much
 
 ```js
 // long-version
+const sql = require('@sequencework/sql')
 const { rows: movies } = await db.query(sql`select * from movies`)
 
 // equivalent, short-version
+const sql = require('@sequencework/sql/pg') // ⚠️ we import @sequencework/sql/pg
 const movies = await sql(db)`select * from movies`
 // sql(db) just calls db.query so db can be a client or a pool :)
 ```
@@ -172,6 +174,8 @@ const movies = await sql(db)`select * from movies`
 You can then rewrite the previous `listMoviesByYear` function in a much more concise way 😎
 
 ```js
+const sql = require('@sequencework/sql/pg') // ⚠️ we import @sequencework/sql/pg
+
 const listMoviesByYear = async (db, yearRange) => sql(db)`
   select * from movies
   where 
