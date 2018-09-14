@@ -12,6 +12,7 @@
   ],
   "files": [
     "sql.js",
+    "pg.js",
     "types/index.d.ts"
   ],
   "types": "types",
