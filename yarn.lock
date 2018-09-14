@@ -897,7 +897,7 @@ define-property@^2.0.2:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
 
-"definitelytyped-header-parser@github:Microsoft/definitelytyped-header-parser#production":
+definitelytyped-header-parser@Microsoft/definitelytyped-header-parser#production:
   version "0.0.0"
   resolved "https://codeload.github.com/Microsoft/definitelytyped-header-parser/tar.gz/7d90e8437ca8a405c8f6467ded5a52ef86ff168c"
   dependencies:
