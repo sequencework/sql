@@ -77,21 +77,6 @@ test('imbricated sql tags (2 levels)', () => {
   expect(query.values[2]).toBe(expr2)
 })
 
-test('shorthand for node-postgres', async () => {
-  const sampleBooks = ['book1', 'book2']
-  const db = {
-    query: async ({ text, values }) => {
-      if (text === 'select * from books') {
-        return { rows: sampleBooks }
-      }
-      return { rows: [] }
-    }
-  }
-
-  const books = await sql(db)`select * from books`
-  expect(books).toBe(sampleBooks)
-})
-
 test('json as query parameter', () => {
   const jsonValue = { _sql: { some: 'data' }, item: 'value' }
   const query = sql`select obj from movies where obj = ${jsonValue}`
