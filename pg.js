@@ -1,6 +1,8 @@
 const sql = require('./sql')
 
-module.exports = db => (...args) => db.query(sql(...args))
+module.exports = sql
+
+module.exports.query = db => (...args) => db.query(sql(...args))
 
 module.exports.one = db => async (...args) => {
   const {
