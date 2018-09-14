@@ -10,9 +10,10 @@ const db = {
   }
 }
 
-test('shorthand for node-postgres', async () => {
-  const { rows: books } = await sql(db)`select * from books`
-  expect(books).toBe(sampleBooks)
+test("sql(db).query should return pg's query result", async () => {
+  const { rows, rowCount } = await sql.query(db)`select * from books`
+  expect(rows).toBe(sampleBooks)
+  expect(rowCount).toBe(sampleBooks.length)
 })
 
 test('sql(db).one should return the first row', async () => {
