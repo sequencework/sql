@@ -165,17 +165,23 @@ const main = async () => {
 
 #### Shorthand for postgres
 
-Since we ❤️ [node-postgres](https://github.com/brianc/node-postgres) so much, we created a shorthand for it :
+Since we ❤️ [node-postgres](https://github.com/brianc/node-postgres) so much, we created shorthands and helpers for it :
 
 ```js
-// long-version
-const sql = require('@sequencework/sql')
-const { rows: movies } = await db.query(sql`select * from movies`)
-
-// equivalent, short-version
 const sql = require('@sequencework/sql/pg') // ⚠️ we import @sequencework/sql/pg
-const movies = await sql(db)`select * from movies`
-// sql(db) just calls db.query so db can be a client or a pool :)
+
+// main export stays the same
+const query = sql`select * from movies where id = ${id}`
+
+// default pg result object : https://node-postgres.com/api/result
+const { rows, rowCount } = await sql.query(db)`select * from movies`
+
+// helpers
+const movies = await sql.many(db)`select * from movies`
+const movie = await sql.one(db)`select * from movies where id = ${id}`
+const nbMovie = await sql.count(
+  db
+)`update from movies set name = ${name} where id = ${id}`
 ```
 
 You can then rewrite the previous `listMoviesByYear` function in a much more concise way 😎
@@ -183,7 +189,7 @@ You can then rewrite the previous `listMoviesByYear` function in a much more con
 ```js
 const sql = require('@sequencework/sql/pg') // ⚠️ we import @sequencework/sql/pg
 
-const listMoviesByYear = async (db, yearRange) => sql(db)`
+const listMoviesByYear = async (db, yearRange) => sql.many(db)`
   select * from movies
   where 
     year >= ${yearRange[0]} 
