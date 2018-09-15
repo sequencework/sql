@@ -24,6 +24,7 @@ jobs:
       - restore-cache:
           key: yarn-packages-{{ checksum "yarn.lock" }}
       - run: yarn
+      - run: yarn dtslint --installAll
       - save-cache:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
