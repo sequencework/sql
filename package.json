@@ -2,6 +2,7 @@
   "name": "@sequencework/sql",
   "version": "1.0.1",
   "main": "sql.js",
+  "types": "sql.d.ts",
   "license": "MIT",
   "description": "Javascript tag to format SQL template literals",
   "keywords": [
@@ -12,10 +13,10 @@
   ],
   "files": [
     "sql.js",
+    "sql.d.ts",
     "pg.js",
-    "types/index.d.ts"
+    "pg.d.ts"
   ],
-  "types": "types",
   "scripts": {
     "build": "tsc && cp -r build/. ./",
     "clean": "rm pg.js sql.js pg.d.ts sql.d.ts 2> /dev/null",
