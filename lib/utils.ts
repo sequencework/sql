@@ -22,3 +22,7 @@ export interface IPGQueryResult {
   rowCount: number
   rows: any[]
 }
+
+export interface IPGQueryable {
+  readonly query: (query: IPGQueryConfig) => Promise<IPGQueryResult>
+}

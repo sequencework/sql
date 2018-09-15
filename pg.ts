@@ -1,11 +1,12 @@
 import {
+  IPGQueryable,
   IPGQueryConfig,
   IPGQueryResult,
   TemplateLiteralFunc
 } from './lib/utils'
 import _sql = require('./sql')
 
-type PGSqlHelper<T> = (db: any) => TemplateLiteralFunc<Promise<T>>
+type PGSqlHelper<T> = (db: IPGQueryable) => TemplateLiteralFunc<Promise<T>>
 
 type PGSql = TemplateLiteralFunc<IPGQueryConfig> & {
   query: PGSqlHelper<IPGQueryResult>
