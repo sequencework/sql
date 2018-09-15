@@ -1,13 +1,13 @@
 class SqlContainer {
+  public readonly chains: ReadonlyArray<string>
+  public readonly expressions: any[]
   constructor(chains: ReadonlyArray<string>, expressions: any[]) {
     this.chains = chains
     this.expressions = expressions
   }
-  readonly chains: ReadonlyArray<string>
-  readonly expressions: any[]
 }
 
-type SqlOutput = {
+interface ISqlOutput {
   _sql?: SqlContainer
   text: string
   values: any[]
@@ -17,7 +17,7 @@ function sqlText(
   count: number,
   chains: ReadonlyArray<string>,
   expressions: any[]
-): SqlOutput {
+): ISqlOutput {
   let text = chains[0]
   const values = []
 
@@ -51,7 +51,7 @@ function sqlText(
   }
 }
 
-function sql(chains: ReadonlyArray<string>, ...expressions: any[]): SqlOutput {
+function sql(chains: ReadonlyArray<string>, ...expressions: any[]): ISqlOutput {
   return sqlText(1, chains, expressions)
 }
 
