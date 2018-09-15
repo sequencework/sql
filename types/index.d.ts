@@ -1,72 +1,63 @@
 // TypeScript Version: 2.9
 
-declare namespace sqlElements {
-  interface QueryConfig {
-    _sql?: SqlContainer
-    text: string
-    values: any[]
-  }
-
-  class SqlContainer {
-    constructor(chains: ReadonlyArray<string>, expressions: any[])
-    readonly chains: ReadonlyArray<string>
-    readonly expressions: any[]
-  }
-}
-
 declare module '@sequencework/sql' {
   function sql(
     chains: ReadonlyArray<string>,
     ...expressions: any[]
-  ): sqlElements.QueryConfig
+  ): sql.QueryConfig
+
+  namespace sql {
+    interface QueryConfig {
+      _sql?: SqlContainer
+      text: string
+      values: any[]
+    }
+
+    class SqlContainer {
+      constructor(chains: ReadonlyArray<string>, expressions: any[])
+      readonly chains: ReadonlyArray<string>
+      readonly expressions: any[]
+    }
+  }
 
   export = sql
 }
 
 declare module '@sequencework/sql/pg' {
-  type PGResultPromise = Promise<{
-    rows: any[]
-  }>
+  import _sql = require('@sequencework/sql')
 
-  interface PGQueryResult {
-    rowCount: number
-    rows: any[]
-  }
-
-  function sql(db: {
-    readonly query: (
-      queryExpression: sqlElements.QueryConfig
-    ) => Promise<PGQueryResult>
-  }): (
+  function sql(
     chains: ReadonlyArray<string>,
     ...expressions: any[]
-  ) => Promise<PGQueryResult>
+  ): sql.QueryConfig
 
-  function one(chains: {
-    readonly query: (
-      queryExpression: sqlElements.QueryConfig
-    ) => Promise<PGQueryResult>
-  }): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<any>
-  namespace one {
+  namespace sql {
+    type QueryConfig = _sql.QueryConfig
 
-  }
+    interface PGQueryResult {
+      rowCount: number
+      rows: any[]
+    }
 
-  function many(chains: {
-    readonly query: (
-      queryExpression: sqlElements.QueryConfig
-    ) => Promise<PGQueryResult>
-  }): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<any[]>
-  namespace many {
+    interface queryable<T extends PGQueryResult = PGQueryResult> {
+      readonly query: (queryExpression: QueryConfig) => Promise<T>
+    }
 
-  }
+    function query<T extends PGQueryResult>(
+      db: queryable<T>
+    ): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<T>
 
-  function count(chains: {
-    readonly query: (
-      queryExpression: sqlElements.QueryConfig
-    ) => Promise<PGQueryResult>
-  }): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<number>
-  namespace count {
+    function one(
+      chains: queryable
+    ): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<any>
 
+    function many(
+      chains: queryable
+    ): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<any[]>
+
+    function count(
+      chains: queryable
+    ): (chains: ReadonlyArray<string>, ...expressions: any[]) => Promise<number>
   }
 
   export = sql
