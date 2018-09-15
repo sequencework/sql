@@ -18,7 +18,7 @@
     "pg.d.ts"
   ],
   "scripts": {
-    "build": "tsc -t es5 -m commonjs -d sql.ts pg.ts",
+    "build": "tsc",
     "clean": "rm pg.js sql.js pg.d.ts sql.d.ts",
     "test": "jest",
     "prettier": "prettier --write '**/*.{ts,js,json,css,md}' --ignore-path .gitignore",

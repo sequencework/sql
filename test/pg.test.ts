@@ -1,4 +1,4 @@
-import sql = require('../src/pg')
+import sql = require('../pg')
 
 const sampleBooks = ['book1', 'book2']
 const db = {
