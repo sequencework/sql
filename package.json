@@ -17,6 +17,8 @@
   ],
   "types": "types",
   "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
     "test": "jest",
     "prettier": "prettier --write '**/*.{js,json,css,md}' --ignore-path .gitignore",
     "lint": "eslint '**/*.js' --ignore-path .gitignore",
@@ -24,12 +26,15 @@
   },
   "devDependencies": {
     "@sequencework/eslint-config": "^0.0.7",
+    "@types/jest": "^23.3.2",
     "dtslint": "^0.3.0",
     "eslint": "5.4.0",
     "husky": "1.0.0-rc.13",
     "jest": "^23.5.0",
     "lint-staged": "7.2.2",
-    "prettier": "1.14.2"
+    "prettier": "1.14.2",
+    "ts-jest": "^23.1.4",
+    "typescript": "^3.0.3"
   },
   "dependencies": {},
   "husky": {
