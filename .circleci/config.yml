@@ -1,0 +1,71 @@
+aliases:
+  - &working_directory ~/sql
+
+  - &node_image
+    image: circleci/node:8
+    environment:
+      PGUSER: root
+
+  - &defaults
+    working_directory: *working_directory
+    docker:
+      - *node_image
+
+  - &attach_environment
+    at: ~/sql
+
+version: 2
+jobs:
+  # Set up environment and install required dependencies
+  setup:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore-cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn
+      - run: yarn dtslint --installAll
+      - save-cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
+      - persist_to_workspace:
+          root: .
+          paths: .
+
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace: *attach_environment
+      - run: yarn run lint
+
+  dtslint:
+    <<: *defaults
+    steps:
+      - attach_workspace: *attach_environment
+      - run: yarn run dtslint
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace: *attach_environment
+      - run: yarn run test
+
+workflows:
+  version: 2
+
+  test:
+    jobs:
+      - setup
+
+      - lint:
+          requires:
+            - setup
+
+      - dtslint:
+          requires:
+            - setup
+
+      - test:
+          requires:
+            - setup

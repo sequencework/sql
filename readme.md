@@ -1,15 +1,22 @@
-### `sql`
+<img src="logo.png" alt="sql``" width="109" height="65"><br>
 
-_tag_ to format SQL \`template literals\`.
+### javascript template literals to format sql
 
 Transforms a template literal in an object that can be read by [node-postgres](https://github.com/brianc/node-postgres).
 
+![version](https://badgen.net/npm/v/@sequencework/sql)
+![publish size](https://badgen.net/circleci/github/sequencework/sql)
+![publish size](https://badgen.net/packagephobia/install/@sequencework/sql)
+![publish size](https://badgen.net/packagephobia/publish/@sequencework/sql)
+
 ### Features
 
-- Nested sql tags
-- `undefined` expressions are ignored
-- Useful [shorthand for node-postgres](#shorthand-fo-postgres) : sql(db)\`...\`
-- [TypeScript-friendly](#usage-with-typescript)
+- [Typescript friendly](#usage-with-typescript)
+- Lightweight (less than 50 lines of code)
+- Fully tested (100% coverage)
+- Works with **nested sql tags**
+- Works with **conditions inside expressions**
+- Compatible with [node-postgres](https://github.com/brianc/node-postgres), with a useful [shorthand](#shorthand-fo-postgres)
 
 ### Installation
 
