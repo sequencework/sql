@@ -1,12 +1,24 @@
-import sql = require('./sql')
+import _sql = require('./sql')
 
-function sqlPG(db: {
-  readonly query: (queryExpression) => Promise<{ rows: any[] }>
-}) {
-  return async (chains, ...expressions) => {
-    const { rows } = await db.query(sql(chains, ...expressions))
-    return rows
-  }
+const sql: any = _sql
+
+sql.query = db => (...args) => db.query(sql(...args))
+
+sql.one = db => async (...args) => {
+  const {
+    rows: [row]
+  } = await db.query(sql(...args))
+  return row
 }
 
-export = sqlPG
+sql.many = db => async (...args) => {
+  const { rows } = await db.query(sql(...args))
+  return rows
+}
+
+sql.count = db => async (...args) => {
+  const { rowCount } = await db.query(sql(...args))
+  return rowCount
+}
+
+export = sql
