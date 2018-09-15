@@ -18,11 +18,11 @@
     "pg.d.ts"
   ],
   "scripts": {
-    "build": "tsc && cp -r build/. ./ && rm -rf build",
-    "clean": "rm pg.js sql.js pg.d.ts sql.d.ts 2> /dev/null",
+    "build": "tsc -t es5 -m commonjs -d sql.ts pg.ts",
+    "clean": "rm pg.js sql.js pg.d.ts sql.d.ts",
     "test": "jest",
     "prettier": "prettier --write '**/*.{ts,js,json,css,md}' --ignore-path .gitignore",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "tslint **/*.ts"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
