@@ -55,10 +55,6 @@ workflows:
           requires:
             - setup
 
-      - dtslint:
-          requires:
-            - setup
-
       - test:
           requires:
             - setup
