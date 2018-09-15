@@ -1,7 +1,5 @@
 node_modules
 coverage
 
-pg.js
-pg.d.ts
-sql.js
-sql.d.ts
+*.d.ts
+*.js

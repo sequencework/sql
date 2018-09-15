@@ -1,23 +1,38 @@
+import {
+  IPGQueryConfig,
+  IPGQueryResult,
+  TemplateLiteralFunc
+} from './lib/utils'
 import _sql = require('./sql')
 
-const sql: any = _sql
+type PGSqlHelper<T> = (db: any) => TemplateLiteralFunc<Promise<T>>
 
-sql.query = db => (...args) => db.query(sql(...args))
+type PGSql = TemplateLiteralFunc<IPGQueryConfig> & {
+  query: PGSqlHelper<IPGQueryResult>
+  many: PGSqlHelper<any[]>
+  one: PGSqlHelper<any>
+  count: PGSqlHelper<number>
+}
 
-sql.one = db => async (...args) => {
+const sql = ((chains, ...expressions) => _sql(chains, ...expressions)) as PGSql
+
+sql.query = db => (chains, ...expressions) =>
+  db.query(_sql(chains, ...expressions))
+
+sql.one = db => async (chains, ...expressions) => {
   const {
     rows: [row]
-  } = await db.query(sql(...args))
+  } = await db.query(_sql(chains, ...expressions))
   return row
 }
 
-sql.many = db => async (...args) => {
-  const { rows } = await db.query(sql(...args))
+sql.many = db => async (chains, ...expressions) => {
+  const { rows } = await db.query(_sql(chains, ...expressions))
   return rows
 }
 
-sql.count = db => async (...args) => {
-  const { rowCount } = await db.query(sql(...args))
+sql.count = db => async (chains, ...expressions) => {
+  const { rowCount } = await db.query(_sql(chains, ...expressions))
   return rowCount
 }
 

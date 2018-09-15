@@ -1,23 +1,10 @@
-class SqlContainer {
-  public readonly chains: ReadonlyArray<string>
-  public readonly expressions: any[]
-  constructor(chains: ReadonlyArray<string>, expressions: any[]) {
-    this.chains = chains
-    this.expressions = expressions
-  }
-}
-
-interface ISqlOutput {
-  _sql?: SqlContainer
-  text: string
-  values: any[]
-}
+import { IPGQueryConfig, SqlContainer, TemplateLiteralFunc } from './lib/utils'
 
 function sqlText(
   count: number,
   chains: ReadonlyArray<string>,
   expressions: any[]
-): ISqlOutput {
+): IPGQueryConfig {
   let text = chains[0]
   const values = []
 
@@ -51,8 +38,7 @@ function sqlText(
   }
 }
 
-function sql(chains: ReadonlyArray<string>, ...expressions: any[]): ISqlOutput {
-  return sqlText(1, chains, expressions)
-}
+const sql: TemplateLiteralFunc<IPGQueryConfig> = (chains, ...expressions) =>
+  sqlText(1, chains, expressions)
 
 export = sql

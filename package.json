@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "clean": "rm pg.js sql.js pg.d.ts sql.d.ts",
+    "clean": "rimraf pg.js pg.d.ts sql.js sql.d.ts lib/**/*.js lib/**/*.d.ts coverage",
     "test": "jest",
     "prettier": "prettier --write '**/*.{ts,js,json,css,md}' --ignore-path .gitignore",
     "lint": "tslint **/*.ts"
@@ -31,6 +31,7 @@
     "jest": "^23.5.0",
     "lint-staged": "7.2.2",
     "prettier": "1.14.2",
+    "rimraf": "^2.6.2",
     "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
