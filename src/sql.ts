@@ -16,7 +16,7 @@ type SqlOutput = {
 function sqlText(
   count: number,
   chains: ReadonlyArray<string>,
-  ...expressions: any[]
+  expressions: any[]
 ): SqlOutput {
   let text = chains[0]
   const values = []
@@ -52,7 +52,7 @@ function sqlText(
 }
 
 function sql(chains: ReadonlyArray<string>, ...expressions: any[]): SqlOutput {
-  return sqlText(1, chains, ...expressions)
+  return sqlText(1, chains, expressions)
 }
 
 export = sql
