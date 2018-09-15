@@ -4,10 +4,10 @@
 
 Transforms a template literal in an object that can be read by [node-postgres](https://github.com/brianc/node-postgres).
 
-![version](https://badgen.net/npm/v/@sequencework/sql)
-![publish size](https://badgen.net/circleci/github/sequencework/sql)
-![publish size](https://badgen.net/packagephobia/install/@sequencework/sql)
-![publish size](https://badgen.net/packagephobia/publish/@sequencework/sql)
+![npm version](https://badgen.net/npm/v/@sequencework/sql)
+![install size](https://badgen.net/packagephobia/install/@sequencework/sql)
+![circleci](https://badgen.net/circleci/github/sequencework/sql)
+![coverage](https://badgen.net/codecov/c/github/sequencework/sql)
 
 ### Features
 
