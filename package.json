@@ -21,14 +21,10 @@
     "build": "tsc && cp -r build/. ./ && rm -rf build",
     "clean": "rm pg.js sql.js pg.d.ts sql.d.ts 2> /dev/null",
     "test": "jest",
-    "prettier": "prettier --write '**/*.{js,json,css,md}' --ignore-path .gitignore",
-    "lint": "eslint '**/*.js' --ignore-path .gitignore"
+    "prettier": "prettier --write '**/*.{ts,js,json,css,md}' --ignore-path .gitignore"
   },
   "devDependencies": {
-    "@sequencework/eslint-config": "^0.0.7",
     "@types/jest": "^23.3.2",
-    "dtslint": "^0.3.0",
-    "eslint": "5.4.0",
     "husky": "1.0.0-rc.13",
     "jest": "^23.5.0",
     "lint-staged": "7.2.2",
@@ -37,6 +33,18 @@
     "typescript": "^3.0.3"
   },
   "dependencies": {},
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -48,20 +56,8 @@
     "singleQuote": true,
     "semi": false
   },
-  "eslintConfig": {
-    "extends": "@sequencework"
-  },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.ts": [
+    "*.{ts,js,json,css,md}": [
       "prettier --write",
       "git add"
     ]
