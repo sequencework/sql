@@ -53,17 +53,39 @@ sql`
 
 // shorthand for node-postgres
 const sampleBooks = ['book1', 'book2']
-const db = {
-  query: async ({ text, values }: { text: string; values: any[] }) => {
+interface CustomQueryResult {
+  rows: any[]
+  rowCount: number
+  oid: number
+}
+const db: sqlPG.queryable<CustomQueryResult> = {
+  query: async ({ text, values }) => {
     if (text === 'select * from books') {
-      return { rows: sampleBooks }
+      return {
+        rows: sampleBooks,
+        rowCount: sampleBooks.length,
+        oid: Math.random()
+      }
     }
-    return { rows: [] }
+    return { rows: [], rowCount: 0, oid: Math.random() }
   }
 }
-const getBooks = async (): Promise<string[]> => {
-  const rows = await sqlPG(db)`select * from books`
-  return rows as string[]
-}
-// $ExpectType Promise<string[]>
-getBooks()
+// sqlPG.query should return pg's query result
+// $ExpectType Promise<CustomQueryResult>
+sqlPG.query(db)`select * from books`
+
+// sqlPG.one should return the first row
+// $ExpectType Promise<any>
+sqlPG.one(db)`select * from books`
+
+// sqlPG.many should return rows
+// $ExpectType Promise<any[]>
+sqlPG.many(db)`select * from books`
+
+// sqlPG.count should return rowCount
+// $ExpectType Promise<number>
+sqlPG.count(db)`select * from books`
+
+// sqlPG should return PGQueryConfig
+// $ExpectType QueryConfig
+sqlPG`select * from books`
