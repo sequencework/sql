@@ -1,6 +1,6 @@
 {
   "name": "@sequencework/sql",
-  "version": "1.0.1",
+  "version": "2.0.0-beta.0",
   "main": "sql.js",
   "license": "MIT",
   "description": "Javascript tag to format SQL template literals",
