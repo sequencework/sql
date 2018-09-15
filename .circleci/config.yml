@@ -6,26 +6,10 @@ aliases:
     environment:
       PGUSER: root
 
-  - &pg_image
-    image: postgres:10-alpine
-    environment:
-      POSTGRES_USER: root
-
   - &defaults
     working_directory: *working_directory
     docker:
       - *node_image
-
-  - &defaults_with_pg
-    working_directory: *working_directory
-    docker:
-      - *node_image
-      - *pg_image
-
-  - &wait_for_pg
-    name: Waiting for postgres to start
-    command: dockerize -wait tcp://localhost:5432 -timeout 1m
-    # dockerize is preinstalled in circleci/* docker image
 
   - &attach_environment
     at: ~/sql
