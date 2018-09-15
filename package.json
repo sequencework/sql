@@ -17,8 +17,8 @@
   ],
   "types": "types",
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc",
+    "build": "tsc && cp -r build/. ./",
+    "clean": "rm pg.js sql.js pg.d.ts sql.d.ts 2> /dev/null",
     "test": "jest",
     "prettier": "prettier --write '**/*.{js,json,css,md}' --ignore-path .gitignore",
     "lint": "eslint '**/*.js' --ignore-path .gitignore",

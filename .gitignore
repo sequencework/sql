@@ -1,2 +1,7 @@
 node_modules
 build
+
+pg.js
+pg.d.ts
+sql.js
+sql.d.ts
