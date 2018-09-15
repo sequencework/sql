@@ -50,6 +50,7 @@ jobs:
     steps:
       - attach_workspace: *attach_environment
       - run: yarn run test
+      - run: yarn codecov
 
 workflows:
   version: 2
