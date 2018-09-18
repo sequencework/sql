@@ -14,9 +14,14 @@ declare module '@sequencework/sql' {
     }
 
     class SqlContainer {
-      constructor(chains: ReadonlyArray<string>, expressions: any[])
+      constructor(
+        chains: ReadonlyArray<string>,
+        expressions: any[],
+        count: number
+      )
       readonly chains: ReadonlyArray<string>
       readonly expressions: any[]
+      readonly count: number
     }
   }
 
