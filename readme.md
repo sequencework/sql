@@ -6,8 +6,8 @@ Transforms a template literal in an object that can be read by [node-postgres](h
 
 ![npm version](https://badgen.net/npm/v/@sequencework/sql)
 ![install size](https://badgen.net/packagephobia/install/@sequencework/sql)
-![circleci](https://badgen.net/circleci/github/sequencework/sql)
-![coverage](https://badgen.net/codecov/c/github/sequencework/sql)
+![circleci](https://badgen.net/circleci/github/sequencework/sql/master)
+![coverage](https://badgen.net/codecov/c/github/sequencework/sql/master)
 
 ### Features
 

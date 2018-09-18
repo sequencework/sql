@@ -4,7 +4,7 @@ function sqlText(
   count: number,
   chains: ReadonlyArray<string>,
   expressions: any[]
-): IPGQueryConfig {
+): IPGQueryConfig & { count: number } {
   let text = chains[0]
   const values = []
 
@@ -16,11 +16,12 @@ function sqlText(
       text += chains[i + 1]
     } else if (expression && expression._sql instanceof SqlContainer) {
       // if expression is a sub `sql` template literal
-      const { text: _text, values: _values } = sqlText(
+      const { text: _text, values: _values, count: _count } = sqlText(
         count,
         expression._sql.chains,
         expression._sql.expressions
       )
+      count = _count
       text += _text + chains[i + 1]
       values.push(..._values)
     } else {
@@ -33,12 +34,15 @@ function sqlText(
 
   return {
     _sql: new SqlContainer(chains, expressions),
+    count,
     text,
     values
   }
 }
 
-const sql: TemplateLiteralFunc<IPGQueryConfig> = (chains, ...expressions) =>
-  sqlText(1, chains, expressions)
+const sql: TemplateLiteralFunc<IPGQueryConfig> = (chains, ...expressions) => {
+  const { _sql, text, values } = sqlText(1, chains, expressions)
+  return { _sql, text, values }
+}
 
 export = sql
