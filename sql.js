@@ -40,7 +40,7 @@ const sql = (chains, ...expressions) => {
 }
 
 class SqlContainer {
-  constructor(chains, expressions, count) {
+  constructor(chains, expressions) {
     this.chains = chains
     this.expressions = expressions
   }
