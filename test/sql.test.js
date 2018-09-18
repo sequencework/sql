@@ -77,6 +77,23 @@ test('imbricated sql tags (2 levels)', () => {
   expect(query.values[2]).toBe(expr2)
 })
 
+test('imbricated sql tags (parallel)', () => {
+  const [expr0, expr1, expr2, expr3, expr4] = ['i', 'like', 'sql', 'a', 'lot']
+  const query = sql`
+    level 0 ${expr0}
+    ${sql`a ${expr1} ${expr2}`}
+    ${sql`b ${expr3} ${expr4}`}
+  `
+
+  expect(trimSpaces(query.text)).toBe('level 0 $1 a $2 $3 b $4 $5')
+  expect(query.values).toHaveLength(5)
+  expect(query.values[0]).toBe(expr0)
+  expect(query.values[1]).toBe(expr1)
+  expect(query.values[2]).toBe(expr2)
+  expect(query.values[3]).toBe(expr3)
+  expect(query.values[4]).toBe(expr4)
+})
+
 test('json as query parameter', () => {
   const jsonValue = { _sql: { some: 'data' }, item: 'value' }
   const query = sql`select obj from movies where obj = ${jsonValue}`
