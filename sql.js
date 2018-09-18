@@ -10,11 +10,11 @@ const sqlText = (count, chains, expressions) => {
       text += chains[i + 1]
     } else if (expression && expression._sql instanceof SqlContainer) {
       // if expression is a sub `sql` template literal
-      const { text: _text, values: _values, count: _count } = sqlText(
-        count,
-        expression._sql.chains,
-        expression._sql.expressions
-      )
+      const {
+        text: _text,
+        values: _values,
+        _sql: { count: _count }
+      } = sqlText(count, expression._sql.chains, expression._sql.expressions)
       count = _count
       text += _text + chains[i + 1]
       values.push(..._values)
@@ -27,10 +27,9 @@ const sqlText = (count, chains, expressions) => {
   }
 
   return {
-    _sql: new SqlContainer(chains, expressions),
+    _sql: new SqlContainer(chains, expressions, count),
     text,
-    values,
-    count
+    values
   }
 }
 
@@ -40,9 +39,10 @@ const sql = (chains, ...expressions) => {
 }
 
 class SqlContainer {
-  constructor(chains, expressions) {
+  constructor(chains, expressions, count) {
     this.chains = chains
     this.expressions = expressions
+    this.count = count
   }
 }
 
