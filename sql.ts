@@ -39,9 +39,7 @@ function sqlText(
   }
 }
 
-const sql: TemplateLiteralFunc<IPGQueryConfig> = (chains, ...expressions) => {
-  const { _sql, text, values } = sqlText(1, chains, expressions)
-  return { _sql, text, values }
-}
+const sql: TemplateLiteralFunc<IPGQueryConfig> = (chains, ...expressions) =>
+  sqlText(1, chains, expressions)
 
 export = sql
