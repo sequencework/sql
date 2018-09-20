@@ -1,9 +1,15 @@
 export class SqlContainer {
   public readonly chains: ReadonlyArray<string>
   public readonly expressions: any[]
-  constructor(chains: ReadonlyArray<string>, expressions: any[]) {
+  public readonly count: number
+  constructor(
+    chains: ReadonlyArray<string>,
+    expressions: any[],
+    count: number
+  ) {
     this.chains = chains
     this.expressions = expressions
+    this.count = count
   }
 }
 
