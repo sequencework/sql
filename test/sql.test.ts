@@ -1,4 +1,4 @@
-const sql = require('../sql')
+import sql = require('../sql')
 
 const trimSpaces = str => str.trim().replace(/\s+/g, ' ')
 

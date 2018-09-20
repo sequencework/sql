@@ -11,7 +11,7 @@ Transforms a template literal in an object that can be read by [node-postgres](h
 
 ### Features
 
-- [Typescript friendly](#usage-with-typescript)
+- Written in [Typescript](#usage-with-typescript)
 - Lightweight (less than 50 lines of code)
 - Fully tested (100% coverage)
 - Works with **nested sql tags**

@@ -24,7 +24,6 @@ jobs:
       - restore-cache:
           key: yarn-packages-{{ checksum "yarn.lock" }}
       - run: yarn
-      - run: yarn dtslint --installAll
       - save-cache:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
@@ -38,12 +37,6 @@ jobs:
     steps:
       - attach_workspace: *attach_environment
       - run: yarn run lint
-
-  dtslint:
-    <<: *defaults
-    steps:
-      - attach_workspace: *attach_environment
-      - run: yarn run dtslint
 
   test:
     <<: *defaults
@@ -60,10 +53,6 @@ workflows:
       - setup
 
       - lint:
-          requires:
-            - setup
-
-      - dtslint:
           requires:
             - setup
 

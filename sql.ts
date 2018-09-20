@@ -1,4 +1,10 @@
-const sqlText = (count, chains, expressions) => {
+import { IPGQueryConfig, SqlContainer, TemplateLiteralFunc } from './lib/utils'
+
+function sqlText(
+  count: number,
+  chains: ReadonlyArray<string>,
+  expressions: any[]
+): IPGQueryConfig {
   let text = chains[0]
   const values = []
 
@@ -33,17 +39,7 @@ const sqlText = (count, chains, expressions) => {
   }
 }
 
-const sql = (chains, ...expressions) => {
-  const { _sql, text, values } = sqlText(1, chains, expressions)
-  return { _sql, text, values }
-}
+const sql: TemplateLiteralFunc<IPGQueryConfig> = (chains, ...expressions) =>
+  sqlText(1, chains, expressions)
 
-class SqlContainer {
-  constructor(chains, expressions, count) {
-    this.chains = chains
-    this.expressions = expressions
-    this.count = count
-  }
-}
-
-module.exports = sql
+export = sql

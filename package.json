@@ -2,6 +2,7 @@
   "name": "@sequencework/sql",
   "version": "2.0.1",
   "main": "sql.js",
+  "types": "sql.d.ts",
   "license": "MIT",
   "description": "Javascript tag to format SQL template literals",
   "keywords": [
@@ -12,34 +13,48 @@
   ],
   "files": [
     "sql.js",
+    "sql.d.ts",
     "pg.js",
-    "types/index.d.ts"
+    "pg.d.ts"
   ],
-  "types": "types",
   "scripts": {
+    "build": "tsc",
+    "clean": "rimraf pg.js pg.d.ts sql.js sql.d.ts lib/**/*.js lib/**/*.d.ts coverage",
     "test": "jest",
-    "prettier": "prettier --write '**/*.{js,json,css,md}' --ignore-path .gitignore",
-    "lint": "eslint '**/*.js' --ignore-path .gitignore",
-    "dtslint": "dtslint types"
+    "prettier": "prettier --write '**/*.{ts,js,json,css,md}' --ignore-path .gitignore",
+    "lint": "tslint *.ts **/*.ts"
   },
   "devDependencies": {
-    "@sequencework/eslint-config": "^0.0.7",
+    "@types/jest": "^23.3.2",
     "codecov": "3.1.0",
-    "dtslint": "^0.3.0",
-    "eslint": "5.4.0",
     "husky": "1.0.0-rc.13",
     "jest": "^23.5.0",
     "lint-staged": "7.2.2",
-    "prettier": "1.14.2"
+    "prettier": "1.14.2",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.1.4",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.0.3"
   },
   "dependencies": {},
+  "jest": {
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "jest": {
-    "collectCoverage": true
   },
   "prettier": {
     "printWidth": 80,
@@ -47,20 +62,13 @@
     "singleQuote": true,
     "semi": false
   },
-  "eslintConfig": {
-    "extends": "@sequencework"
-  },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write",
-      "git add"
-    ],
     "*.ts": [
+      "prettier --write",
+      "tslint",
+      "git add"
+    ],
+    "*.{ts,js,json,css,md}": [
       "prettier --write",
       "git add"
     ]

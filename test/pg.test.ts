@@ -1,7 +1,8 @@
-const sql = require('../pg')
+import { IPGQueryable } from '../lib/utils'
+import sql = require('../pg')
 
 const sampleBooks = ['book1', 'book2']
-const db = {
+const db: IPGQueryable = {
   query: async ({ text, values }) => {
     if (text === 'select * from books') {
       return { rows: sampleBooks, rowCount: sampleBooks.length }
@@ -9,6 +10,11 @@ const db = {
     return { rows: [], rowCount: 0 }
   }
 }
+
+test('sql should return the query config', async () => {
+  const queryConfig = sql`select * from books`
+  expect(queryConfig._sql).toBeTruthy()
+})
 
 test("sql.query should return pg's query result", async () => {
   const { rows, rowCount } = await sql.query(db)`select * from books`
