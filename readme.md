@@ -179,9 +179,7 @@ const { rows, rowCount } = await sql.query(db)`select * from movies`
 // helpers
 const movies = await sql.many(db)`select * from movies`
 const movie = await sql.one(db)`select * from movies where id = ${id}`
-const nbMovie = await sql.count(
-  db
-)`update from movies set name = ${name} where id = ${id}`
+const nbMovie = await sql.count(db)`update from movies set name = ${name} where id = ${id}`
 ```
 
 You can then rewrite the previous `listMoviesByYear` function in a much more concise way 😎
