@@ -15,7 +15,9 @@
     "sql.js",
     "sql.d.ts",
     "pg.js",
-    "pg.d.ts"
+    "pg.d.ts",
+    "lib/**/*.js",
+    "lib/**/*.d.ts"
   ],
   "scripts": {
     "build": "tsc",
