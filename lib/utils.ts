@@ -29,6 +29,6 @@ export interface IPGQueryResult {
   rows: any[]
 }
 
-export interface IPGQueryable {
-  readonly query: (query: IPGQueryConfig) => Promise<IPGQueryResult>
+export interface IPGQueryable<T extends IPGQueryResult = IPGQueryResult> {
+  readonly query: (query: IPGQueryConfig) => Promise<T>
 }
