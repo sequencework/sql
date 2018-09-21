@@ -24,7 +24,7 @@
     "clean": "rimraf pg.js pg.d.ts sql.js sql.d.ts lib/**/*.js lib/**/*.d.ts coverage",
     "test": "jest",
     "prettier": "prettier --write '**/*.{ts,js,json,css,md}' --ignore-path .gitignore",
-    "lint": "tslint *.ts **/*.ts"
+    "lint": "tslint -c tslint.json -p tsconfig.json -t stylish"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",

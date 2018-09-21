@@ -4,5 +4,5 @@
     "module": "commonjs",
     "declaration": true
   },
-  "files": ["sql.ts", "pg.ts"]
+  "files": ["sql.ts", "pg.ts", "lib/utils.ts"]
 }
