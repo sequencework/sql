@@ -6,13 +6,13 @@ import {
 } from './lib/utils'
 import _sql = require('./sql')
 
-type PGSqlHelper<T> = (db: IPGQueryable) => TemplateLiteralFunc<Promise<T>>
-
 type PGSql = TemplateLiteralFunc<IPGQueryConfig> & {
-  query: PGSqlHelper<IPGQueryResult>
-  many: PGSqlHelper<any[]>
-  one: PGSqlHelper<any>
-  count: PGSqlHelper<number>
+  query: <T extends IPGQueryResult>(
+    db: IPGQueryable<T>
+  ) => TemplateLiteralFunc<Promise<T>>
+  many: (db: IPGQueryable) => TemplateLiteralFunc<Promise<any[]>>
+  one: (db: IPGQueryable) => TemplateLiteralFunc<Promise<any>>
+  count: (db: IPGQueryable) => TemplateLiteralFunc<Promise<number>>
 }
 
 const sql = ((chains, ...expressions) => _sql(chains, ...expressions)) as PGSql
