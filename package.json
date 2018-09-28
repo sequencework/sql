@@ -1,8 +1,8 @@
 {
   "name": "@sequencework/sql",
   "version": "2.1.1",
-  "main": "sql.js",
-  "types": "sql.d.ts",
+  "main": "dist/sql.js",
+  "types": "dist/sql.d.ts",
   "license": "MIT",
   "description": "Javascript tag to format SQL template literals",
   "keywords": [
@@ -12,16 +12,11 @@
     "pg"
   ],
   "files": [
-    "sql.js",
-    "sql.d.ts",
-    "pg.js",
-    "pg.d.ts",
-    "lib/**/*.js",
-    "lib/**/*.d.ts"
+    "dist"
   ],
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf pg.js pg.d.ts sql.js sql.d.ts lib/**/*.js lib/**/*.d.ts coverage",
+    "clean": "rimraf dist coverage",
     "test": "jest",
     "prettier": "prettier --write '**/*.{ts,js,json,css,md}' --ignore-path .gitignore",
     "lint": "tslint -c tslint.json -p tsconfig.json -t stylish"
