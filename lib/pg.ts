@@ -1,10 +1,10 @@
+import _sql = require('./sql')
 import {
   IPGQueryable,
   IPGQueryConfig,
   IPGQueryResult,
   TemplateLiteralFunc
-} from './lib/utils'
-import _sql = require('./sql')
+} from './utils'
 
 type PGSql = TemplateLiteralFunc<IPGQueryConfig> & {
   query: <T extends IPGQueryResult>(

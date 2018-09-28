@@ -1,0 +1,6 @@
+{
+  "name": "@sequencework/sql/pg",
+  "private": true,
+  "main": "../dist/pg.js",
+  "types": "../dist/pg.d.ts"
+}

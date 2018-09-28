@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "declaration": true
+    "declaration": true,
+    "outDir": "dist"
   },
-  "files": ["sql.ts", "pg.ts", "lib/utils.ts"]
+  "include": ["lib"]
 }

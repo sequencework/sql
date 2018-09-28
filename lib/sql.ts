@@ -1,4 +1,4 @@
-import { IPGQueryConfig, SqlContainer, TemplateLiteralFunc } from './lib/utils'
+import { IPGQueryConfig, SqlContainer, TemplateLiteralFunc } from './utils'
 
 function sqlText(
   count: number,
