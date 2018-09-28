@@ -12,6 +12,7 @@
     "pg"
   ],
   "files": [
+    "pg",
     "dist"
   ],
   "scripts": {
