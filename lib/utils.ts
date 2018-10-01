@@ -24,6 +24,10 @@ export interface IPGQueryConfig {
   values: any[]
 }
 
+export type Sql = TemplateLiteralFunc<IPGQueryConfig> & {
+  raw: (rawData: string) => IPGQueryConfig
+}
+
 export interface IPGQueryResult {
   rowCount: number
   rows: any[]

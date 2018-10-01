@@ -46,3 +46,13 @@ test('sql.count should return rowCount', async () => {
   const nbBooks = await sql.count(db)`select * from books where read = ${false}`
   expect(nbBooks).toBe(sampleBooks.length)
 })
+
+test('sql.raw should work with pg shorthand', async () => {
+  const tableName = 'books'
+  const { rows, rowCount, oid } = await sql.query(db)`select * from ${sql.raw(
+    tableName
+  )} where read = ${false}`
+  expect(rows).toBe(sampleBooks)
+  expect(rowCount).toBe(sampleBooks.length)
+  expect(oid).toBe(1)
+})

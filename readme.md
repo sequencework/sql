@@ -40,14 +40,14 @@ const query = sql`
     and year <= ${yearRange[1]}
 `
 
-// query looks like this :
+// query looks like this:
 // {
 //  text: 'select * from books where author = $1 and year = $2',
 //  values: [1983, 1992]
 // }
 ```
 
-You can also use conditions :
+You can also use conditions:
 
 ```js
 const sql = require('@sequencework/sql')
@@ -60,13 +60,13 @@ const findBookByAuthor = author => sql`
   }
 `
 
-// findBookByAuthor() looks like this :
+// findBookByAuthor() looks like this:
 // {
 //  text: 'select * from books',
 //  values: []
 // }
 
-// findBookByAuthor('steinbeck') looks like this :
+// findBookByAuthor('steinbeck') looks like this:
 // {
 //  text: 'select * from books where author = $1',
 //  values: ['steinbeck']
@@ -91,9 +91,18 @@ sql`
 `
 ```
 
+It's also possible to pass raw, unescaped data to your queries. For that, use `sql.raw`:
+
+```js
+const tableName = 'books'
+const query = sql`select * from ${sql.raw(tableName)}`
+```
+
+💥 Please, be careful! Remember that the raw values won't be replaced by a placeholder and thus won't be escaped!
+
 ### Example with [node-postgres](https://github.com/brianc/node-postgres)
 
-We start by creating a function :
+We start by creating a function:
 
 ```js
 // movies.js
@@ -124,7 +133,7 @@ const db = new Pool()
 module.exports = db
 ```
 
-Finally, we connect everything :
+Finally, we connect everything:
 
 ```js
 // main.js
@@ -140,7 +149,7 @@ const main = async () => {
 main()
 ```
 
-We can even create a **transaction** (useless in this example, but it's just to show that our previous function is reusable) :
+We can even create a **transaction** (useless in this example, but it's just to show that our previous function is reusable):
 
 ```js
 const main = async () => {
@@ -165,7 +174,7 @@ const main = async () => {
 
 #### Shorthand for postgres
 
-Since we ❤️ [node-postgres](https://github.com/brianc/node-postgres) so much, we created shorthands and helpers for it :
+Since we ❤️ [node-postgres](https://github.com/brianc/node-postgres) so much, we created shorthands and helpers for it:
 
 ```js
 const sql = require('@sequencework/sql/pg') // ⚠️ we import @sequencework/sql/pg
@@ -173,13 +182,15 @@ const sql = require('@sequencework/sql/pg') // ⚠️ we import @sequencework/sq
 // main export stays the same
 const query = sql`select * from movies where id = ${id}`
 
-// default pg result object : https://node-postgres.com/api/result
+// default pg result object: https://node-postgres.com/api/result
 const { rows, rowCount } = await sql.query(db)`select * from movies`
 
 // helpers
 const movies = await sql.many(db)`select * from movies`
 const movie = await sql.one(db)`select * from movies where id = ${id}`
-const nbMovie = await sql.count(db)`update from movies set name = ${name} where id = ${id}`
+const nbMovie = await sql.count(
+  db
+)`update from movies set name = ${name} where id = ${id}`
 ```
 
 You can then rewrite the previous `listMoviesByYear` function in a much more concise way 😎
@@ -214,7 +225,7 @@ const query = sql`
 
 ### More
 
-This package is inspired by the great [sql-template-strings](https://github.com/felixfbecker/node-sql-template-strings). Some interesting features that we were missing :
+This package is inspired by the great [sql-template-strings](https://github.com/felixfbecker/node-sql-template-strings). Some interesting features that we were missing:
 
 - nested `sql` tags
 - ignore `undefined` expressions in `sql`

@@ -1,4 +1,4 @@
-import { IPGQueryConfig, SqlContainer, TemplateLiteralFunc } from './utils'
+import { IPGQueryConfig, Sql, SqlContainer } from './utils'
 
 function sqlText(
   count: number,
@@ -39,7 +39,9 @@ function sqlText(
   }
 }
 
-const sql: TemplateLiteralFunc<IPGQueryConfig> = (chains, ...expressions) =>
-  sqlText(1, chains, expressions)
+const sql: Sql = ((chains, ...expressions) =>
+  sqlText(1, chains, expressions)) as Sql
+
+sql.raw = rawData => sqlText(1, [rawData], [])
 
 export = sql
