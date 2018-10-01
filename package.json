@@ -1,6 +1,6 @@
 {
   "name": "@sequencework/sql",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "main": "dist/sql.js",
   "types": "dist/sql.d.ts",
   "license": "MIT",
