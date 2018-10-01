@@ -102,3 +102,11 @@ test('json as query parameter', () => {
   expect(query.values).toHaveLength(1)
   expect(query.values[0]).toBe(jsonValue)
 })
+
+test('query with raw data', () => {
+  const tableName = 'books'
+  const query = sql`select * from ${sql.raw(tableName)} where read = ${false}`
+  expect(trimSpaces(query.text)).toBe('select * from books where read = $1')
+  expect(query.values).toHaveLength(1)
+  expect(query.values[0]).toBe(false)
+})

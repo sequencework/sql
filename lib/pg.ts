@@ -1,12 +1,7 @@
 import _sql = require('./sql')
-import {
-  IPGQueryable,
-  IPGQueryConfig,
-  IPGQueryResult,
-  TemplateLiteralFunc
-} from './utils'
+import { IPGQueryable, IPGQueryResult, Sql, TemplateLiteralFunc } from './utils'
 
-type PGSql = TemplateLiteralFunc<IPGQueryConfig> & {
+type PGSql = Sql & {
   query: <T extends IPGQueryResult>(
     db: IPGQueryable<T>
   ) => TemplateLiteralFunc<Promise<T>>
@@ -16,6 +11,8 @@ type PGSql = TemplateLiteralFunc<IPGQueryConfig> & {
 }
 
 const sql = ((chains, ...expressions) => _sql(chains, ...expressions)) as PGSql
+
+sql.raw = rawData => _sql.raw(rawData)
 
 sql.query = db => (chains, ...expressions) =>
   db.query(_sql(chains, ...expressions))
