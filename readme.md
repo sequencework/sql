@@ -182,6 +182,10 @@ const sql = require('@sequencework/sql/pg') // ⚠️ we import @sequencework/sq
 // main export stays the same
 const query = sql`select * from movies where id = ${id}`
 
+// sql.raw is also there
+const booksTable = 'books'
+const booksQuery = sql`select * from ${sql.raw(booksTable)}`
+
 // default pg result object: https://node-postgres.com/api/result
 const { rows, rowCount } = await sql.query(db)`select * from movies`
 
