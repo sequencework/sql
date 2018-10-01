@@ -20,7 +20,9 @@
     "clean": "rimraf dist coverage",
     "test": "jest",
     "prettier": "prettier --write '**/*.{ts,js,json,css,md}' --ignore-path .gitignore",
-    "lint": "tslint -c tslint.json -p tsconfig.json -t stylish"
+    "lint": "tslint -c tslint.json -p tsconfig.json -t stylish",
+    "publish:latest": "yarn build && yarn publish",
+    "publish:beta": "yarn build && yarn publish --tag beta"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
