@@ -25,7 +25,7 @@
     "publish:beta": "yarn build && yarn publish --tag beta"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.2",
+    "@types/jest": "^24.0.13",
     "codecov": "3.1.0",
     "husky": "1.0.0-rc.13",
     "jest": "^23.5.0",
